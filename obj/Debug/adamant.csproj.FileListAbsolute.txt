@@ -1,0 +1,2 @@
+C:\cygwin64\home\Veltas\proj\adamant\adamant\bin\Debug\adamant.exe.config
+C:\cygwin64\home\Veltas\proj\adamant\bin\Debug\adamant.exe.config
