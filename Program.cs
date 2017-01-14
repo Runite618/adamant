@@ -11,11 +11,7 @@ namespace adamant
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Provide a file to read into the text string variable");
-
-            var fileName = Console.ReadLine();
-
-            FileCheck(fileName);
+            FileCheck(args[0]);
         }
 
         public static void FileCheck(string fileName)
@@ -25,12 +21,10 @@ namespace adamant
             {
                 text = File.ReadAllText(fileName);
                 Console.WriteLine(text);
-                Console.ReadLine();
             }
             else
             {
                 Console.Error.WriteLine("Error: File doesn't exist");
-                Console.ReadLine();
             }
         }
     }

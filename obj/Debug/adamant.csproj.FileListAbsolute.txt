@@ -3,6 +3,6 @@ C:\cygwin64\home\Veltas\proj\adamant\bin\Debug\adamant.exe.config
 D:\Users\Matthew\Source\Repos\adamant\bin\Debug\adamant.exe.config
 D:\Users\Matthew\Source\Repos\adamant\bin\Debug\adamant.exe
 D:\Users\Matthew\Source\Repos\adamant\bin\Debug\adamant.pdb
-D:\Users\Matthew\Source\Repos\adamant\obj\Debug\adamant.csprojResolveAssemblyReference.cache
 D:\Users\Matthew\Source\Repos\adamant\obj\Debug\adamant.exe
 D:\Users\Matthew\Source\Repos\adamant\obj\Debug\adamant.pdb
+D:\Users\Matthew\Source\Repos\adamant\obj\Debug\adamant.csprojResolveAssemblyReference.cache
