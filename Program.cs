@@ -14,12 +14,22 @@ namespace adamant
             Console.WriteLine("Provide a file to read into the text string variable");
 
             var fileName = Console.ReadLine();
-            string text;
 
+            FileCheck(fileName);
+        }
+
+        public static void FileCheck(string fileName)
+        {
+            string text;
             if (File.Exists(fileName))
             {
                 text = File.ReadAllText(fileName);
                 Console.WriteLine(text);
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.Error.WriteLine("Error: File doesn't exist");
                 Console.ReadLine();
             }
         }
