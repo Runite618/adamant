@@ -11,7 +11,14 @@ namespace adamant
     {
         static void Main(string[] args)
         {
-            FileCheck(args[0]);
+            if (args.Length == 1)
+            {
+                FileCheck(args[0]);
+            }
+            else
+            {
+                Console.Error.WriteLine("Error: Insert one argument only");
+            }
         }
 
         public static void FileCheck(string fileName)
