@@ -21,6 +21,18 @@ namespace adamant
             }
         }
 
+        public static bool GetParagraphBreak(ref int pos, string text)
+        {
+            var searchFor = Environment.NewLine + Environment.NewLine;
+            var index = text.IndexOf(searchFor, pos);
+            if(index == -1)
+            {
+                return false;
+            }
+            pos = index;
+            return true;
+        }
+
         public static void FileCheck(string fileName)
         {
             string text;
@@ -29,7 +41,25 @@ namespace adamant
                 text = File.ReadAllText(fileName);
                 Console.WriteLine("<html>");
                 Console.WriteLine("<body>");
-                Console.WriteLine(text);
+
+                var textArray = new List<string>();
+
+                int pos = 0, prevPos = pos;
+                while(GetParagraphBreak(ref pos, text))
+                {
+                    textArray.Add(text.Substring(prevPos, pos - prevPos));
+                    pos += Environment.NewLine.Length * 2;
+                    prevPos = pos;
+                }
+                textArray.Add(text.Substring(pos, text.Length - pos));
+
+                foreach (var element in textArray)
+                {
+                    Console.WriteLine("<p>");
+                    Console.WriteLine(element);
+                    Console.WriteLine("</p>");
+                }
+
                 Console.WriteLine("</body>");
                 Console.WriteLine("</html>");
             }
