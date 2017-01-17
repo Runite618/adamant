@@ -27,7 +27,11 @@ namespace adamant
             if (File.Exists(fileName))
             {
                 text = File.ReadAllText(fileName);
-                Console.WriteLine("<html> " + text + " </html>");
+                Console.WriteLine("<html>");
+                Console.WriteLine("<body>");
+                Console.WriteLine(text);
+                Console.WriteLine("</body>");
+                Console.WriteLine("</html>");
             }
             else
             {
