@@ -39,34 +39,49 @@ namespace adamant
             if (File.Exists(fileName))
             {
                 text = File.ReadAllText(fileName);
-                Console.WriteLine("<html>");
-                Console.WriteLine("<body>");
+                AddHTMTTags();
 
                 var textArray = new List<string>();
 
-                int pos = 0, prevPos = pos;
-                while(GetParagraphBreak(ref pos, text))
-                {
-                    textArray.Add(text.Substring(prevPos, pos - prevPos));
-                    pos += Environment.NewLine.Length * 2;
-                    prevPos = pos;
-                }
-                textArray.Add(text.Substring(pos, text.Length - pos));
+                GetParagraphs(text, textArray);
 
-                foreach (var element in textArray)
-                {
-                    Console.WriteLine("<p>");
-                    Console.WriteLine(element);
-                    Console.WriteLine("</p>");
-                }
+                PrintPTags(textArray);
 
-                Console.WriteLine("</body>");
-                Console.WriteLine("</html>");
+                AddHTMTTags();
             }
             else
             {
                 Console.Error.WriteLine("Error: File doesn't exist");
             }
+        }
+
+        private static void AddHTMTTags()
+        {
+            Console.WriteLine("<html>");
+            Console.WriteLine("<body>");
+        }
+
+        private static void PrintPTags(List<string> textArray)
+        {
+            foreach (var element in textArray)
+            {
+                Console.WriteLine("<p>");
+                Console.WriteLine(element);
+                Console.WriteLine("</p>");
+            }
+        }
+
+        private static List<string> GetParagraphs(string text, List<string> textArray)
+        {
+            int pos = 0, prevPos = pos;
+            while (GetParagraphBreak(ref pos, text))
+            {
+                textArray.Add(text.Substring(prevPos, pos - prevPos));
+                pos += Environment.NewLine.Length * 2;
+                prevPos = pos;
+            }
+            textArray.Add(text.Substring(pos, text.Length - pos));
+            return textArray;
         }
     }
 }
