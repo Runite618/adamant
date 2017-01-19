@@ -39,7 +39,9 @@ namespace adamant
             if (File.Exists(fileName))
             {
                 text = File.ReadAllText(fileName);
-                AddHTMTTags();
+
+                Console.WriteLine("<html>");
+                Console.WriteLine("<body>");
 
                 var textArray = new List<string>();
 
@@ -47,18 +49,13 @@ namespace adamant
 
                 PrintPTags(textArray);
 
-                AddHTMTTags();
+                Console.WriteLine("</body>");
+                Console.WriteLine("</html>");
             }
             else
             {
                 Console.Error.WriteLine("Error: File doesn't exist");
             }
-        }
-
-        private static void AddHTMTTags()
-        {
-            Console.WriteLine("<html>");
-            Console.WriteLine("<body>");
         }
 
         private static void PrintPTags(List<string> textArray)
