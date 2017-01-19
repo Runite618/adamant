@@ -11,6 +11,9 @@ namespace adamant
     {
         const int ERROR_BAD_COMMAND = 22;
 
+        const ConsoleColor ErrColor = ConsoleColor.Red;
+        const ConsoleColor ErrColorDetail = ConsoleColor.DarkYellow;
+
         public static void Main(string[] args)
         {
             if (args.Length == 1)
@@ -20,7 +23,12 @@ namespace adamant
             }
             else
             {
-                Console.Error.WriteLine("Error: Insert one argument only");
+                ConsoleColor startFg = Console.ForegroundColor;
+                Console.ForegroundColor = ErrColor;
+                Console.Error.Write("Error: ");
+                Console.ForegroundColor = ErrColorDetail;
+                Console.Error.WriteLine("Insert one argument only");
+                Console.ForegroundColor = startFg;
                 Environment.Exit(ERROR_BAD_COMMAND);
             }
         }
@@ -37,7 +45,13 @@ namespace adamant
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error: Failed to convert " + fileName + ", reason: " + ex);
+                ConsoleColor startFg = Console.ForegroundColor;
+                Console.ForegroundColor = ErrColor;
+                Console.Error.Write("Error: ");
+                Console.ForegroundColor = ErrColorDetail;
+                Console.Error.Write("Failed to convert " + fileName + ", reason: ");
+                Console.ForegroundColor = startFg;
+                Console.Error.WriteLine(ex);
             }
             return null;
         }
