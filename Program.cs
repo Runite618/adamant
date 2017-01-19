@@ -9,19 +9,79 @@ namespace adamant
 {
     class Program
     {
-        static void Main(string[] args)
+        const int ERROR_BAD_COMMAND = 22;
+
+        public static void Main(string[] args)
         {
             if (args.Length == 1)
             {
-                ConvertFile(args[0]);
+                string result = ConvertFile(args[0]);
+                Console.WriteLine(result);
             }
             else
             {
                 Console.Error.WriteLine("Error: Insert one argument only");
+                Environment.Exit(ERROR_BAD_COMMAND);
             }
         }
 
-        public static bool GetParagraphBreak(ref int pos, string text)
+        private static string ConvertFile(string fileName)
+        {
+            try
+            {
+                string text = File.ReadAllText(fileName);
+                // Ordering of this part is important!
+                text = AddParagraphTags(text);
+                text = AddFileTags(text);
+                return text;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Error: Failed to convert " + fileName + ", reason: " + ex);
+            }
+            return null;
+        }
+
+        private static string AddParagraphTags(string text)
+        {
+            var value = new StringBuilder();
+            List<string> paragraphs = ListParagraphs(text);
+            foreach (var paragraph in paragraphs)
+            {
+                value.AppendLine("<p>");
+                value.AppendLine(paragraph);
+                value.AppendLine("</p>");
+            }
+            return value.ToString();
+        }
+
+        private static string AddFileTags(string text)
+        {
+            var value = new StringBuilder();
+            value.AppendLine("<html>");
+            value.AppendLine("<body>");
+            value.AppendLine(text);
+            value.AppendLine("</body>");
+            value.AppendLine("</html>");
+            return value.ToString();
+        }
+
+        private static List<string> ListParagraphs(string text)
+        {
+            var textArray = new List<string>();
+            int pos = 0;
+            int prevPos = pos;
+            while (GetParagraphBreak(ref pos, text))
+            {
+                textArray.Add(text.Substring(prevPos, pos - prevPos));
+                pos += Environment.NewLine.Length * 2;
+                prevPos = pos;
+            }
+            textArray.Add(text.Substring(pos, text.Length - pos));
+            return textArray;
+        }
+
+        private static bool GetParagraphBreak(ref int pos, string text)
         {
             var searchFor = Environment.NewLine + Environment.NewLine;
             var index = text.IndexOf(searchFor, pos);
@@ -31,53 +91,6 @@ namespace adamant
             }
             pos = index;
             return true;
-        }
-
-        public static void ConvertFile(string fileName)
-        {
-            try
-            {
-                string text = File.ReadAllText(fileName);
-
-                Console.WriteLine("<html>");
-                Console.WriteLine("<body>");
-
-                var textArray = new List<string>();
-
-                GetParagraphs(text, textArray);
-
-                PrintPTags(textArray);
-
-                Console.WriteLine("</body>");
-                Console.WriteLine("</html>");
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Error: Failed to convert " + fileName + ", reason: " + ex);
-            }
-        }
-
-        private static void PrintPTags(List<string> textArray)
-        {
-            foreach (var element in textArray)
-            {
-                Console.WriteLine("<p>");
-                Console.WriteLine(element);
-                Console.WriteLine("</p>");
-            }
-        }
-
-        private static List<string> GetParagraphs(string text, List<string> textArray)
-        {
-            int pos = 0, prevPos = pos;
-            while (GetParagraphBreak(ref pos, text))
-            {
-                textArray.Add(text.Substring(prevPos, pos - prevPos));
-                pos += Environment.NewLine.Length * 2;
-                prevPos = pos;
-            }
-            textArray.Add(text.Substring(pos, text.Length - pos));
-            return textArray;
         }
     }
 }
