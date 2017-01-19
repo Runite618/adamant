@@ -35,10 +35,9 @@ namespace adamant
 
         public static void ConvertFile(string fileName)
         {
-            string text;
-            if (File.Exists(fileName))
+            try
             {
-                text = File.ReadAllText(fileName);
+                string text = File.ReadAllText(fileName);
 
                 Console.WriteLine("<html>");
                 Console.WriteLine("<body>");
@@ -52,9 +51,9 @@ namespace adamant
                 Console.WriteLine("</body>");
                 Console.WriteLine("</html>");
             }
-            else
+            catch (Exception ex)
             {
-                Console.Error.WriteLine("Error: File doesn't exist");
+                Console.Error.WriteLine("Error: Failed to convert " + fileName + ", reason: " + ex);
             }
         }
 
