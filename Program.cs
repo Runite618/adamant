@@ -13,7 +13,7 @@ namespace adamant
         {
             if (args.Length == 1)
             {
-                FileCheck(args[0]);
+                ConvertFile(args[0]);
             }
             else
             {
@@ -33,7 +33,7 @@ namespace adamant
             return true;
         }
 
-        public static void FileCheck(string fileName)
+        public static void ConvertFile(string fileName)
         {
             string text;
             if (File.Exists(fileName))
